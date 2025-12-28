@@ -10,7 +10,7 @@ import numpy as np
 from pathlib import Path
 
 
-problem = input("Enter the problem of choice (Options: 'elliptope', 'EdK', 'GenSDO', 'PDG', 'HSSC', 'GenSSC'): ")
+problem = input("Enter the problem of choice (Options: 'elliptope', 'EdK', 'GenSDO', 'PDG', 'HSSC'): ")
 print(f"Selected problem: {problem}")
 
 # Call problem data
