@@ -19,7 +19,7 @@ if problem == 'elliptope':
 
 elif problem == 'EdK':
     # Initial Solutions available for n = 3,4,5
-    n = int(input("Enter the dimension of EdK problem"))
+    n = int(input("Enter the dimension of EdK problem (available dimensions 3,4, and 5):"))
     n, m, A, b, C, X_init, y_init, S_init, Xopt, yopt, Sopt = EdK(n)
 
 elif problem == 'GenSDO':
@@ -30,7 +30,7 @@ elif problem == 'GenSDO':
     if instance+'.mat' in mat_files: 
         n, m, A, b, C, X_init, y_init, S_init, Xopt, yopt, Sopt = instance_loader(instance)       
     else:
-        n, n_B, n_N, m = map(int, input("Enter n, n_B, n_N, m (exact order): ").split())
+        n, n_B, n_N, m = map(int, input("Enter n, n_B, n_N, m (exact order separated with space):").split())
         gen_sdo_dims = GenSDODims(n=n, n_B=n_B, n_N=n_N, m=m)
         Xopt,Sopt = -np.eye(n+1), -np.eye(n+1)
         while np.linalg.eigh(Xopt+Sopt)[0][0] < 0:
