@@ -28,13 +28,15 @@ elif problem == 'GenSDO':
     mat_files = [f.name for f in GenProblemsLib.glob("*.mat")]
  
     if instance+'.mat' in mat_files: 
-        n, m, A, b, C, X_init, y_init, S_init, Xopt, yopt, Sopt = instance_loader(instance)       
+        n, m, A, b, C, X_init, y_init, S_init, Xopt, yopt, Sopt = instance_loader(instance)
+        print(f'{instance} loaded!')       
     else:
-        n, n_B, n_N, m = map(int, input("Enter n, n_B, n_N, m (exact order separated with space):").split())
+        n, n_B, n_N, m = map(int, input("Enter n-1, n_B, n_N-1, m (exact order separated with space):").split())
         gen_sdo_dims = GenSDODims(n=n, n_B=n_B, n_N=n_N, m=m)
         Xopt,Sopt = -np.eye(n+1), -np.eye(n+1)
         while np.linalg.eigh(Xopt+Sopt)[0][0] < 0:
             (Q,A,b,C,Xopt,yopt,Sopt,X_init,y_init,S_init)= SDOGen(gen_sdo_dims)
+        print(f'Problem generated with (n, n_B, n_N, n_T, m)={(n+1, n_B, n_N+1, n+1-n_B-n_N-1, m+1)}!')
     
 elif problem == 'PDG':
    instance = input("Enter the name of instance:")
@@ -49,6 +51,8 @@ elif problem == 'HSSC':
 # Prepare the initial solution
 X0, y0, S0 = init_prep(n, m, A,b,C, X_init, y_init, S_init)
 
+print('Initial solution ready! Proceed to solve!')
+
 
 # Algorithm parameters
 HOIPMParams = set_ipm_params(beta=0.5, cent_tol=1e-1, 
@@ -60,7 +64,7 @@ HOIPMParams = set_ipm_params(beta=0.5, cent_tol=1e-1,
                              gamma=1.05)
 
 params = [] # Pairs of (ρ, p)
-for i in [1,2]:
+for i in [1, 2]:
   for j in [i, 2*i, 3*i]:
     params.append((i, j))
 

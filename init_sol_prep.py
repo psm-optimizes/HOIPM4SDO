@@ -75,7 +75,7 @@ def init_prep(n, m, A,b,C, X_init, y_init, S_init):
     if np.linalg.norm(S1 - (C - c_temp)) >= feas_tol:
         print('Dual Infeasibility with error of', np.linalg.norm(S1 - (C - c_temp)))
     
-    if X1 is not None and X2.any():
+    if X1 is not None and X1.any():
         return X1, y1, S1
     else:
         return X_init, y_init, S_init
