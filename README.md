@@ -7,7 +7,9 @@ Implementation of Higher-order Interior Point Method (IPM) of Semidefinite Optim
 
 This repository implements higher-order interior-point methods (HOIPMs)
 for semidefinite optimization (SDO), with a focus on improving convergence
-near non-strictly complementary solutions.
+near non-strictly complementary solutions. The algorithm is exhaustively expalined in the paper 
+'On the complexity of semi-definite optimization: a super-linearly convergent interior point method',
+available at 'https://arxiv.org/abs/XXXX.XXXXX'.
 
 ## Features
 
