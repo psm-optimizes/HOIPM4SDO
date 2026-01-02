@@ -1,5 +1,7 @@
+![Python](https://img.shields.io/badge/python-3.10+-blue)
+
 # HOIPM4SDO
-Implementation of Higher-order Interior Point Method (IPM) for Pathological Instances of Semidefinite Optimization
+Implementation of Higher-order Interior Point Method (IPM) of Semidefinite Optimization (SDO)
 
 ## Motivation
 
@@ -10,18 +12,18 @@ near non-strictly complementary solutions.
 ## Features
 
 - Higher-order IPM based on the AHO direction and full Newton system
-- Support for infeasible and feasible starts
-- Comparison against standard IPMs
+- Support for feasible starts: init_prep() function centers the given inital solution on the central path with gap equal to 1 
+- Includes some pathological instances of SDO for testing
 - Logging of duality gap and convergence behavior
+- Code available for comparison against standard solvers including MOSEK and SDPA
 
 ## Installation
-
 Clone the repository:
 ```bash
 git clone https://github.com/username/HOIPM4SDO.git
+cd HOIPM4SDO
 ```
 
 ## Testing
-To test the implementation, make sure you have the required Python packages, included in requirements.txt installed.
-
-![Python](https://img.shields.io/badge/python-3.10+-blue)
+- To test the implementation, make sure you have the required Python packages, included in requirements.txt installed.
+- You may choose to work with the runner 
