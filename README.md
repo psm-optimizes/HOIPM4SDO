@@ -19,7 +19,7 @@ near non-strictly complementary solutions.
 Clone the repository:
 ```bash
 git clone https://github.com/username/HOIPM4SDO.git
-cd HOIPM4SDO
+```
 
 ## Testing
 To test the implementation, make sure you have the required Python packages, included in requirements.txt installed.
