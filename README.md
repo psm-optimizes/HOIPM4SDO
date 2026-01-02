@@ -52,5 +52,5 @@ The project requires the following packages:
 - Upon termination, convergence and ratio history tables display, and a figure will be generated and saved at experiments folder.
 - To include other solvers (MOSEK, etc.), you need to run the code for using those solvers, provided in 'solvers' folder. 
 - Note that for MOSEK you need a license, and SeDuMi and SDPT3 can be executed in MATLAB.
-- For MOSEK and SDPA, there are helper functions to extract the gaps from their files. Please refer to 'extract_mu' and 
-'extract_mu_spda' function in 'solvers/cvxpy_solve.py', for your reference. 
+- For MOSEK and SDPA, there are helper functions to extract the gaps from their files. Please refer to 'extract_mu()' and 
+'extract_mu_spda()' functions in 'solvers/cvxpy_solve.py', for your reference. 
