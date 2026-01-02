@@ -3,6 +3,7 @@ import scipy as sp
 from copy import deepcopy
 import math
 import matplotlib.pyplot as plt
+from datetime import datetime
 from utilities import symkron, symet, svec, smat, is_pos_def, draw_table
 from dataclasses import dataclass
 
@@ -433,4 +434,6 @@ def output_process(problem,params,XX,yy,SS,muRecs,Records,orders_used,n,m,A,b,C,
   ##################################
   plt.legend()
   plt.grid()
+  timestamp = datetime.now().strftime('%Y%m%d-%H%M%S')
+  plt.savefig(f'experiments/{problem}_size{n+1}_{timestamp}')
   plt.show()
