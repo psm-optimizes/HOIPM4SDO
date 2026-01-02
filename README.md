@@ -3,7 +3,7 @@
 # HOIPM4SDO
 Implementation of Higher-order Interior Point Method (IPM) of Semidefinite Optimization (SDO)
 
-## Motivation
+## 🎯 Overview
 
 This repository implements higher-order interior-point methods (HOIPMs)
 for semidefinite optimization (SDO), with a focus on improving convergence
@@ -17,16 +17,32 @@ near non-strictly complementary solutions.
 - Logging of duality gap and convergence behavior
 - Code available for comparison against standard solvers including MOSEK and SDPA in Python and SeDuMi and SDPT3 in MATLAB
 
-## Installation
-Clone the repository:
+## 🚀 Installation
+### 1. Clone the Repository
 ```bash
 git clone https://github.com/username/HOIPM4SDO.git
 cd HOIPM4SDO
 ```
+### 2. Create Virtual Environment
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+###  3. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+## 📦 Dependencies
+
+The project requires the following packages:
+- `numpy` - Numerical computations
+- `scipy` - Scientific computing
+- `pandas` - Data analysis and CSV handling
+- `matplotlib` - Plotting and visualization
+- `cvxpy` - Modeling language and solver interface
 
 ## Testing
-- To test the implementation, make sure you have the required Python packages, included in requirements.txt installed.
-- You may choose to work with the runner.py or the jupyter notebook experiments.ipynb.
+- You may choose to work with the `runner.py` or the jupyter notebook `experiments.ipynb`.
 - Both the runner and the notebook navigate you through choosing a problem to solve and additional arguments to input.
 - You can choose the parameters ($\rho,p$) for the algorithm to choose.
 - Once the algorithm executes, the output contain the iteration informations includeing gap, current status of algorithm.
