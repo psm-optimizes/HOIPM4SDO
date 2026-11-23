@@ -3,7 +3,7 @@ import scipy as sp
 import pandas as pd
 from scipy import linalg
 from copy import deepcopy
-
+import re
 import math
 import time
 import random
@@ -256,3 +256,125 @@ def records_to_latex_table(
     lines.append("\\end{tabular}")
     lines.append("\\end{table}")
     return "\n".join(lines)
+
+def styled_df_to_latex(
+    styled_df,
+    caption=r"Addendum to Table 4, Part $(\rho,p) = (2,2)$",
+):
+    """
+    Return a complete LaTeX table matching the requested template.
+
+    Includes:
+    - A table environment with placement [htbp].
+    - A caption above the table.
+    - The specified arraystretch settings and adjustbox wrapper.
+    - Centered columns and vertically centered merged cells.
+    - Mathematical order and derivative labels.
+    - Partial rules between orders and full rules between iterations.
+    - The merged centering-count column in the last position.
+
+    The caption accepts LaTeX commands and math.
+    """
+    # These are the names in the INPUT DataFrame.
+    expected_names = [
+        "Iter.",
+        "# full centering steps",
+        "Order (p)",
+        "‖(X, y, S)‖",
+        "Derivative",
+        "Norm of Derivative",
+    ]
+
+    if (
+        list(styled_df.data.index.names) != expected_names
+        or len(styled_df.data.columns) != 0
+    ):
+        raise ValueError(
+            "Expected the six-level index produced by your "
+            "current auxiliary-information table."
+        )
+
+    # Preserve the input Styler and its displayed values.
+    export_style = deepcopy(styled_df)
+    export_style.set_table_styles([], overwrite=True)
+
+    # Supply the caption in our own table wrapper.
+    export_style.caption = None
+
+    latex = export_style.to_latex(
+        column_format="cccccc",
+        hrules=True,
+        clines=None,
+        sparse_index=True,
+        multirow_align="c",
+    )
+
+    derivative_labels = {
+        "X": r"$X^{(j)}$",
+        "y": r"$y^{(j)}$",
+        "S": r"$S^{(j)}$",
+    }
+
+    lines = []
+    first_row = True
+    body_started = False
+
+    for line in latex.splitlines():
+        stripped = line.rstrip()
+
+        if stripped.endswith(r"\\"):
+            cells = [
+                cell.strip()
+                for cell in re.split(r"(?<!\\)&", stripped[:-2])
+            ]
+
+            if len(cells) != 6:
+                raise ValueError(
+                    "Expected six cells in each exported table row."
+                )
+
+            if first_row:
+                # Format the exported column headings.
+                cells[1] = r"\# full centering steps"
+                cells[2] = r"Order ($j$)"
+                cells[3] = r"$\|(X, y, S)\|$"
+                first_row = False
+
+            else:
+                # Check ORIGINAL positions before moving the count:
+                # cells[0] = iteration
+                # cells[2] = order
+                # cells[4] = derivative label
+                #
+                # In sparse output, a nonempty iteration or order
+                # cell marks the beginning of that group.
+                if body_started:
+                    if cells[0]:
+                        lines.append(r"\hline")
+                    elif cells[2]:
+                        lines.append(r"\cline{2-5}")
+
+                body_started = True
+
+                # Format derivative labels in math mode.
+                cells[4] = derivative_labels.get(cells[4], cells[4])
+
+            # Move the entire centering-count cell to the last column,
+            # preserving its existing \multirow command.
+            cells.append(cells.pop(1))
+            line = " & ".join(cells) + r" \\"
+
+        lines.append(line)
+
+    # Wrap the generated tabular exactly as in the supplied template.
+    return "\n".join([
+        r"\begin{table}[htbp]",
+        r"\centering",
+        r"\renewcommand{\arraystretch}{1.3}",
+        rf"\caption{{{caption}}}",
+        r"\begin{adjustbox}{max totalsize={\linewidth}{0.95\textheight},center}",
+        r"\renewcommand{\arraystretch}{1.175}",
+        *lines,
+        r"\end{adjustbox}",
+        r"\end{table}",
+    ])

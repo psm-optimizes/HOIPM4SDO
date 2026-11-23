@@ -1,6 +1,7 @@
 from utilities import *
 from init_sol_prep import init_prep
-from HOIPM import set_ipm_params, HOIPM_FNS, output_process
+from HOIPM import set_ipm_params, HOIPM_FNS
+from outprocessing import output_process
 from problems.elliptope import elliptope
 from problems.EdK import EdK
 from problems.problem_generator_source import GenSDODims, instance_loader, SDOGen
